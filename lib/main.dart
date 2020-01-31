@@ -1,3 +1,4 @@
+import 'package:arch_sample/bloc/advice_bloc.dart';
 import 'package:arch_sample/widget/advice_qr_screen.dart';
 import 'package:arch_sample/widget/fab_bottom_bar_item.dart';
 import 'package:flutter/material.dart';
@@ -14,17 +15,12 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
   int _position = 0;
-  List<Widget> tabs = <Widget>[];
-
-  @override
-  void initState() {
-    super.initState();
-
-    tabs.add(AdviceQrScreen());
-    tabs.add(AdviceQrScreen());
-    tabs.add(AdviceQrScreen());
-    tabs.add(AdviceQrScreen());
-  }
+  List<Widget> tabs = <Widget>[
+    AdviceQrScreen(bloc: AdviceBloc()),
+    AdviceQrScreen(bloc: AdviceBloc()),
+    AdviceQrScreen(bloc: AdviceBloc()),
+    AdviceQrScreen(bloc: AdviceBloc()),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +58,10 @@ class MyAppState extends State<MyApp> {
               FABBottomAppBarItem(iconData: Icons.info, text: 'Bar'),
             ],
           ),
-          body: tabs[_position]),
+          body: IndexedStack(
+            index: _position,
+            children: tabs,
+          )),
     );
   }
 }

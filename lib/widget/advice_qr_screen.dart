@@ -2,15 +2,24 @@ import 'package:arch_sample/bloc/advice_bloc.dart';
 import 'package:arch_sample/model/advice.dart';
 import 'package:flutter/material.dart';
 
-class AdviceQrScreen extends StatelessWidget {
-  AdviceBloc bloc = AdviceBloc();
+class AdviceQrScreen extends StatefulWidget{
+  AdviceBloc bloc;
+
+  AdviceQrScreen({this.bloc});
+
+  @override
+  State<StatefulWidget> createState() {
+    return AdviceQrScreenState();
+  }
+}
+
+class AdviceQrScreenState extends State<AdviceQrScreen>  with AutomaticKeepAliveClientMixin{
 
   @override
   Widget build(BuildContext context) {
-    bloc.getRandomAdvice(false);
-
+    super.build(context);
     return StreamBuilder(
-      stream: bloc.adviceStream,
+      stream: widget.bloc.adviceStream,
       builder: (context, AsyncSnapshot<Advice> snapshot) {
         if (snapshot.hasData) {
           return Center(
@@ -28,15 +37,17 @@ class AdviceQrScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Image.network(
-                    "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${snapshot.data.advice}",
+                    "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${snapshot
+                        .data.advice}",
                     height: 128,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: RaisedButton(
-                    onPressed: () => {
-                      bloc.getRandomAdvice(true),
+                    onPressed: () =>
+                    {
+                      widget.bloc.getRandomAdvice(true),
                     },
                     child: Text('Refresh'),
                   ),
@@ -44,8 +55,8 @@ class AdviceQrScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: RaisedButton(
-                    onPressed: () => {
-
+                    onPressed: () =>
+                    {
                     },
                     child: Text('Push'),
                   ),
@@ -56,8 +67,14 @@ class AdviceQrScreen extends StatelessWidget {
         } else if (snapshot.hasError) {
           return Text(snapshot.error.toString());
         }
+
+        widget.bloc.getRandomAdvice(false);
         return Center(child: CircularProgressIndicator());
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
+
 }
