@@ -2,7 +2,7 @@ import 'package:arch_sample/bloc/advice_bloc.dart';
 import 'package:arch_sample/model/advice.dart';
 import 'package:flutter/material.dart';
 
-class AdviceQrScreen extends StatefulWidget{
+class AdviceQrScreen extends StatefulWidget {
   AdviceBloc bloc;
 
   AdviceQrScreen({this.bloc});
@@ -13,8 +13,8 @@ class AdviceQrScreen extends StatefulWidget{
   }
 }
 
-class AdviceQrScreenState extends State<AdviceQrScreen>  with AutomaticKeepAliveClientMixin{
-
+class AdviceQrScreenState extends State<AdviceQrScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -37,16 +37,14 @@ class AdviceQrScreenState extends State<AdviceQrScreen>  with AutomaticKeepAlive
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Image.network(
-                    "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${snapshot
-                        .data.advice}",
+                    "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${snapshot.data.advice}",
                     height: 128,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: RaisedButton(
-                    onPressed: () =>
-                    {
+                    onPressed: () => {
                       widget.bloc.getRandomAdvice(true),
                     },
                     child: Text('Refresh'),
@@ -55,8 +53,8 @@ class AdviceQrScreenState extends State<AdviceQrScreen>  with AutomaticKeepAlive
                 Padding(
                   padding: const EdgeInsets.only(top: 16.0),
                   child: RaisedButton(
-                    onPressed: () =>
-                    {
+                    onPressed: () => {
+
                     },
                     child: Text('Push'),
                   ),
@@ -65,7 +63,8 @@ class AdviceQrScreenState extends State<AdviceQrScreen>  with AutomaticKeepAlive
             ),
           );
         } else if (snapshot.hasError) {
-          return Center(child: Column(
+          return Center(
+              child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -73,8 +72,7 @@ class AdviceQrScreenState extends State<AdviceQrScreen>  with AutomaticKeepAlive
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: RaisedButton(
-                  onPressed: () =>
-                  {
+                  onPressed: () => {
                     widget.bloc.getRandomAdvice(true),
                   },
                   child: Text('Retry'),
@@ -92,5 +90,4 @@ class AdviceQrScreenState extends State<AdviceQrScreen>  with AutomaticKeepAlive
 
   @override
   bool get wantKeepAlive => true;
-
 }
