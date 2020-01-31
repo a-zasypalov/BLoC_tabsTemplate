@@ -65,7 +65,23 @@ class AdviceQrScreenState extends State<AdviceQrScreen>  with AutomaticKeepAlive
             ),
           );
         } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return Center(child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text(snapshot.error.toString()),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: RaisedButton(
+                  onPressed: () =>
+                  {
+                    widget.bloc.getRandomAdvice(true),
+                  },
+                  child: Text('Retry'),
+                ),
+              ),
+            ],
+          ));
         }
 
         widget.bloc.getRandomAdvice(false);

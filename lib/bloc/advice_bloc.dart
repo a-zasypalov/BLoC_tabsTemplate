@@ -13,9 +13,13 @@ class AdviceBloc {
     if (refresh) {
       _adviceFetcher.sink.add(null);
     }
-    BaseTypedResponse<Advice> response = await _repository.getRandomAdvice();
-    if (response.data != null) {
-      _adviceFetcher.sink.add(response.data);
+    try {
+      BaseTypedResponse<Advice> response = await _repository.getRandomAdvice();
+      if (response.data != null) {
+        _adviceFetcher.sink.add(response.data);
+      }
+    } catch (SocketException) {
+      _adviceFetcher.sink.addError("No internet!");
     }
   }
 
