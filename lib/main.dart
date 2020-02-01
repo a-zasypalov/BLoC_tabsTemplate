@@ -45,6 +45,9 @@ class HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    //Check if keyboard is visible
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -53,17 +56,19 @@ class HomeWidgetState extends State<HomeWidget> {
         centerTitle: true,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => {
-          await scanner.scan().then((value) => {
-                _scaffoldKey.currentState.showSnackBar(SnackBar(
-                  content: Text(value),
-                ))
-              })
-        },
-        child: Icon(Icons.add),
-        elevation: 2.0,
-      ),
+      floatingActionButton: showFab //Hide FAB if keyboard is visible
+          ? FloatingActionButton(
+              onPressed: () async => {
+                await scanner.scan().then((value) => {
+                      _scaffoldKey.currentState.showSnackBar(SnackBar(
+                        content: Text(value),
+                      ))
+                    })
+              },
+              child: Icon(Icons.add),
+              elevation: 2.0,
+            )
+          : null,
       bottomNavigationBar: FABBottomAppBar(
         color: Colors.grey,
         selectedColor: Theme.of(context).accentColor,
