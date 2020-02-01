@@ -1,3 +1,5 @@
+import 'package:arch_sample/screens/qr_scanned_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:arch_sample/widgets/fab_bottom_bar_item.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
@@ -29,8 +31,10 @@ class HomeWidgetState extends State<HomeWidget> {
 
     return WillPopScope(
       onWillPop: () async {
-        final isFirstRouteInCurrentTab =
-        !await _tabs.values.toList()[_currentTabPosition].currentState.maybePop();
+        final isFirstRouteInCurrentTab = !await _tabs.values
+            .toList()[_currentTabPosition]
+            .currentState
+            .maybePop();
         if (isFirstRouteInCurrentTab) {
           // if not on the 'main' tab
           if (_currentTabPosition != 0) {
@@ -53,16 +57,13 @@ class HomeWidgetState extends State<HomeWidget> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: showFab //Hide FAB if keyboard is visible
             ? FloatingActionButton(
-          onPressed: () async => {
-            await scanner.scan().then((value) => {
-              _scaffoldKey.currentState.showSnackBar(SnackBar(
-                content: Text(value),
-              ))
-            })
-          },
-          child: Icon(Icons.add),
-          elevation: 2.0,
-        )
+                onPressed: () async => {
+                  await scanner.scan().then(
+                      (value) => {_openQrcannedValueGlobally(value, context)})
+                },
+                child: Icon(Icons.add),
+                elevation: 2.0,
+              )
             : null,
         bottomNavigationBar: FABBottomAppBar(
           color: Colors.grey,
@@ -83,7 +84,7 @@ class HomeWidgetState extends State<HomeWidget> {
         ),
         body: IndexedStack(
           index: _currentTabPosition,
-          children: <Widget> [
+          children: <Widget>[
             _buildOffstageNavigator(TabItem.first),
             _buildOffstageNavigator(TabItem.second),
             _buildOffstageNavigator(TabItem.third),
@@ -94,10 +95,20 @@ class HomeWidgetState extends State<HomeWidget> {
     );
   }
 
+  void _openQrcannedValueGlobally(String value, BuildContext context) {
+    Navigator.of(context).push(CupertinoPageRoute(
+        builder: (context) => QrScannedScreen(
+              advice: value,
+            )));
+  }
+
   void _selectTab(int tabIndex) {
     if (tabIndex == _currentTabPosition) {
       // pop to first route
-      _tabs.values.toList()[_currentTabPosition].currentState.popUntil((route) => route.isFirst);
+      _tabs.values
+          .toList()[_currentTabPosition]
+          .currentState
+          .popUntil((route) => route.isFirst);
     } else {
       setState(() => _currentTabPosition = tabIndex);
     }

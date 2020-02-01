@@ -30,7 +30,7 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
                     child: Text(
                       snapshot.data.advice,
                       textAlign: TextAlign.center,
@@ -44,7 +44,7 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
                     child: TextField(decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Write something'

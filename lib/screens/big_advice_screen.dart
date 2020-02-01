@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class BigAdviceScreen extends StatelessWidget {
   final String advice;
@@ -7,11 +8,17 @@ class BigAdviceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        advice,
-        style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900),
-        textAlign: TextAlign.center,
+    return Container(
+      color: Colors.white,
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            advice,
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900),
+            textAlign: TextAlign.center,
+          ),
+        ),
       ),
     );
   }
