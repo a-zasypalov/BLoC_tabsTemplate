@@ -3,9 +3,10 @@ import 'package:arch_sample/model/advice.dart';
 import 'package:flutter/material.dart';
 
 class AdviceQrScreen extends StatefulWidget {
-  AdviceBloc bloc;
+  final AdviceBloc bloc;
+  final ValueChanged<String> onPush;
 
-  AdviceQrScreen({this.bloc});
+  AdviceQrScreen({this.bloc, this.onPush});
 
   @override
   State<StatefulWidget> createState() {
@@ -62,7 +63,7 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                     padding: const EdgeInsets.only(top: 16.0),
                     child: RaisedButton(
                       onPressed: () => {
-
+                        widget.onPush(snapshot.data.advice)
                       },
                       child: Text('Push'),
                     ),
