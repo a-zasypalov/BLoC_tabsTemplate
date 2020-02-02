@@ -96,7 +96,7 @@ class HomeWidgetState extends State<HomeWidget> {
   }
 
   void _openQrcannedValueGlobally(String value, BuildContext context) {
-    Navigator.of(context).push(CupertinoPageRoute(
+    Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => QrScannedScreen(
               advice: value,
             )));

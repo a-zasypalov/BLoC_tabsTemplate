@@ -16,6 +16,7 @@ class AdviceQrScreen extends StatefulWidget {
 
 class AdviceQrScreenState extends State<AdviceQrScreen>
     with AutomaticKeepAliveClientMixin {
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -45,7 +46,8 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
-                    child: TextField(decoration: InputDecoration(
+                    child: TextField(
+                      decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Write something'
                     ),)
