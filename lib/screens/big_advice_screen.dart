@@ -8,15 +8,17 @@ class BigAdviceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            advice,
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900),
-            textAlign: TextAlign.center,
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              advice,
+              style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900),
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),

@@ -85,16 +85,17 @@ class HomeWidgetState extends State<HomeWidget> {
         body: IndexedStack(
           index: _currentTabPosition,
           children: <Widget>[
-            _buildOffstageNavigator(TabItem.first),
-            _buildOffstageNavigator(TabItem.second),
-            _buildOffstageNavigator(TabItem.third),
-            _buildOffstageNavigator(TabItem.fourth),
+            _buildOffstageNavigator(TabItem.first, Navigator.of(context)),
+            _buildOffstageNavigator(TabItem.second, Navigator.of(context)),
+            _buildOffstageNavigator(TabItem.third, Navigator.of(context)),
+            _buildOffstageNavigator(TabItem.fourth, Navigator.of(context)),
           ],
         ),
       ),
     );
   }
 
+  //Global navigation
   void _openQrcannedValueGlobally(String value, BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => QrScannedScreen(
@@ -114,12 +115,13 @@ class HomeWidgetState extends State<HomeWidget> {
     }
   }
 
-  Widget _buildOffstageNavigator(TabItem tabItem) {
+  Widget _buildOffstageNavigator(TabItem tabItem, NavigatorState globalNavigator) {
     return Offstage(
       offstage: _tabs.keys.toList()[_currentTabPosition] != tabItem,
       child: TabNavigator(
         navigatorKey: _tabs[tabItem],
         tabItem: tabItem,
+        globalNavigator: globalNavigator,
       ),
     );
   }

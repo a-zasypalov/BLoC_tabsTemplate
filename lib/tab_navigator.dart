@@ -12,34 +12,11 @@ class TabNavigatorRoutes {
 }
 
 class TabNavigator extends StatelessWidget {
-  TabNavigator({this.navigatorKey, this.tabItem});
+  TabNavigator({this.navigatorKey, this.tabItem, this.globalNavigator});
 
   final GlobalKey<NavigatorState> navigatorKey;
   final TabItem tabItem;
-
-  void _push(BuildContext context, String advice) {
-    var routeBuilders = _routeBuilders(context, advice: advice);
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => routeBuilders[TabNavigatorRoutes.qr](context),
-      ),
-    );
-  }
-
-  Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
-      {String advice}) {
-    return {
-      TabNavigatorRoutes.root: (context) => AdviceQrScreen(
-            bloc: AdviceBloc(),
-            onPush: (advice) => _push(context, advice),
-          ),
-      TabNavigatorRoutes.qr: (context) => BigAdviceScreen(
-            advice: advice,
-          )
-    };
-  }
+  final NavigatorState globalNavigator;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +29,50 @@ class TabNavigator extends StatelessWidget {
           builder: (context) => routeBuilders[routeSettings.name](context),
         );
       },
+    );
+  }
+
+  //Navigation routes
+  Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
+      {String advice}) {
+    return {
+
+      //Route to first screen
+      TabNavigatorRoutes.root: (context) => AdviceQrScreen(
+        bloc: AdviceBloc(),
+        onPush: (advice) => _push(context, advice), //listener
+        onGlobalPush: (advice) => _globalPush(context, advice), //listener
+      ),
+
+      //Route to second screen
+      TabNavigatorRoutes.qr: (context) => BigAdviceScreen(
+        advice: advice,
+      )
+
+    };
+  }
+
+
+  //Open second screen locally
+  void _push(BuildContext context, String advice) {
+    var routeBuilders = _routeBuilders(context, advice: advice);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => routeBuilders[TabNavigatorRoutes.qr](context),
+      ),
+    );
+  }
+
+  //Open second screen globally
+  void _globalPush(BuildContext context, String advice) {
+    var routeBuilders = _routeBuilders(context, advice: advice);
+
+    globalNavigator.push(
+      MaterialPageRoute(
+        builder: (context) => routeBuilders[TabNavigatorRoutes.qr](context),
+      ),
     );
   }
 }

@@ -2,11 +2,13 @@ import 'package:arch_sample/bloc/advice_bloc.dart';
 import 'package:arch_sample/model/advice.dart';
 import 'package:flutter/material.dart';
 
+//QR screen class
 class AdviceQrScreen extends StatefulWidget {
   final AdviceBloc bloc;
   final ValueChanged<String> onPush;
+  final ValueChanged<String> onGlobalPush;
 
-  AdviceQrScreen({this.bloc, this.onPush});
+  AdviceQrScreen({this.bloc, this.onPush, this.onGlobalPush});
 
   @override
   State<StatefulWidget> createState() {
@@ -14,6 +16,7 @@ class AdviceQrScreen extends StatefulWidget {
   }
 }
 
+//QR screen state
 class AdviceQrScreenState extends State<AdviceQrScreen>
     with AutomaticKeepAliveClientMixin {
 
@@ -67,7 +70,16 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                       onPressed: () => {
                         widget.onPush(snapshot.data.advice)
                       },
-                      child: Text('Push'),
+                      child: Text('Local push'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: RaisedButton(
+                      onPressed: () => {
+                        widget.onGlobalPush(snapshot.data.advice)
+                      },
+                      child: Text('Global push'),
                     ),
                   )
                 ],

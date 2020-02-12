@@ -8,16 +8,22 @@ class AdviceApiProvider {
   Client client = Client();
 
   Future<BaseTypedResponse<Advice>> getRandomAdvice() async {
+
     try {
       final response = await client.get('https://api.adviceslip.com/advice');
+
       if (response.statusCode == 200) {
         return BaseTypedResponse<Advice>(
-            data: Advice.fromJson(json.decode(response.body)['slip']));
+            data: Advice.fromJson(json.decode(response.body)['slip'])
+        );
       } else {
         throw Exception(response.body);
       }
+
     } catch (SocketException) {
       throw SocketException("No internet");
     }
+
   }
+
 }
