@@ -7,8 +7,9 @@ class AdviceQrScreen extends StatefulWidget {
   final AdviceBloc bloc;
   final ValueChanged<String> onPush;
   final ValueChanged<String> onGlobalPush;
+  final ValueChanged<String> onPushReplacement;
 
-  AdviceQrScreen({this.bloc, this.onPush, this.onGlobalPush});
+  AdviceQrScreen({this.bloc, this.onPush, this.onGlobalPush, this.onPushReplacement});
 
   @override
   State<StatefulWidget> createState() {
@@ -80,6 +81,15 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                         widget.onGlobalPush(snapshot.data.advice)
                       },
                       child: Text('Global push'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16.0),
+                    child: RaisedButton(
+                      onPressed: () => {
+                        widget.onPushReplacement(snapshot.data.advice)
+                      },
+                      child: Text('Replace'),
                     ),
                   )
                 ],

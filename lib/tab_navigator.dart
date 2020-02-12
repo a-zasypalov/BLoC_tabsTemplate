@@ -42,6 +42,7 @@ class TabNavigator extends StatelessWidget {
         bloc: AdviceBloc(),
         onPush: (advice) => _push(context, advice), //listener
         onGlobalPush: (advice) => _globalPush(context, advice), //listener
+        onPushReplacement: (advice) => _replace(context, advice),
       ),
 
       //Route to second screen
@@ -75,4 +76,16 @@ class TabNavigator extends StatelessWidget {
       ),
     );
   }
+
+  void _replace(BuildContext context, String advice) {
+    var routeBuilders = _routeBuilders(context, advice: advice);
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => routeBuilders[TabNavigatorRoutes.qr](context),
+      ),
+    );
+  }
+
 }
