@@ -27,7 +27,7 @@ class QrScannedScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 advice,
-                textAlign: TextAlign.center,
+                //textAlign: TextAlign.center,
               ),
             ),
           ],

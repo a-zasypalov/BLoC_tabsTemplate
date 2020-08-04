@@ -66,7 +66,7 @@ class HomeWidgetState extends State<HomeWidget> {
               )
             : null,
         bottomNavigationBar: FABBottomAppBar(
-          color: Colors.grey,
+          color: Colors.grey.shade500,
           selectedColor: Theme.of(context).accentColor,
           notchedShape: CircularNotchedRectangle(),
           selectedIndex: _currentTabPosition,
