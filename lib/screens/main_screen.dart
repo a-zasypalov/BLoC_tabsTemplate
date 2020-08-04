@@ -1,8 +1,8 @@
 import 'package:arch_sample/screens/qr_scanned_screen.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:arch_sample/widgets/fab_bottom_bar_item.dart';
-import 'package:qrscan/qrscan.dart' as scanner;
 
 import '../tab_navigator.dart';
 
@@ -58,8 +58,10 @@ class HomeWidgetState extends State<HomeWidget> {
         floatingActionButton: showFab //Hide FAB if keyboard is visible
             ? FloatingActionButton(
                 onPressed: () async => {
-                  await scanner.scan().then(
-                      (value) => {_openQrcannedValueGlobally(value, context)})
+                  await BarcodeScanner.scan().then((value) => {
+                    if (value.rawContent.isNotEmpty)
+                      {_openQrcannedValueGlobally(value.rawContent, context)}
+                  })
                 },
                 child: Icon(Icons.add),
                 elevation: 2.0,
