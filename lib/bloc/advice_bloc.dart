@@ -6,9 +6,9 @@ import 'package:rxdart/rxdart.dart';
 class AdviceBloc {
 
   final _repository = AdviceRepository();
-  final _adviceFetcher = PublishSubject<Advice>();
+  final _adviceFetcher = PublishSubject<Advice?>();
 
-  Observable<Advice> get adviceStream => _adviceFetcher.stream;
+  Stream<Advice?> get adviceStream => _adviceFetcher.stream;
 
   getRandomAdvice(bool refresh) async {
 

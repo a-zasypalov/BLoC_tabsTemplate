@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BigAdviceScreen extends StatelessWidget {
   final String advice;
 
-  BigAdviceScreen({this.advice});
+  BigAdviceScreen({required this.advice});
 
   @override
   Widget build(BuildContext context) {

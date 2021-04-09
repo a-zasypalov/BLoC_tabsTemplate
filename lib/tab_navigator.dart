@@ -12,7 +12,7 @@ class TabNavigatorRoutes {
 }
 
 class TabNavigator extends StatelessWidget {
-  TabNavigator({this.navigatorKey, this.tabItem, this.globalNavigator});
+  TabNavigator({required this.navigatorKey, required this.tabItem, required this.globalNavigator});
 
   final GlobalKey<NavigatorState> navigatorKey;
   final TabItem tabItem;
@@ -26,7 +26,7 @@ class TabNavigator extends StatelessWidget {
       initialRoute: TabNavigatorRoutes.root,
       onGenerateRoute: (routeSettings) {
         return MaterialPageRoute(
-          builder: (context) => routeBuilders[routeSettings.name](context),
+          builder: (context) => routeBuilders[routeSettings.name]!(context),
         );
       },
     );
@@ -78,9 +78,9 @@ class TabNavigator extends StatelessWidget {
   void _push(BuildContext context, String route, {dynamic data}) {
     var routeBuilders = _routeBuilders(context, data: data);
 
-    navigatorKey.currentState.push(
+    navigatorKey.currentState?.push(
       MaterialPageRoute(
-        builder: (context) => routeBuilders[route](context),
+        builder: (context) => routeBuilders[route]!(context),
       ),
     );
   }
@@ -89,9 +89,9 @@ class TabNavigator extends StatelessWidget {
   void _replaceScreen(BuildContext context, String route, {dynamic data}) {
     var routeBuilders = _routeBuilders(context, data: data);
 
-    navigatorKey.currentState.pushReplacement(
+    navigatorKey.currentState?.pushReplacement(
       MaterialPageRoute(
-        builder: (context) => routeBuilders[route](context),
+        builder: (context) => routeBuilders[route]!(context),
       ),
     );
   }
@@ -102,7 +102,7 @@ class TabNavigator extends StatelessWidget {
 
     globalNavigator.push(
       MaterialPageRoute(
-        builder: (context) => routeBuilders[route](context),
+        builder: (context) => routeBuilders[route]!(context),
       ),
     );
   }
@@ -113,7 +113,7 @@ class TabNavigator extends StatelessWidget {
 
     globalNavigator.pushReplacement(
       MaterialPageRoute(
-        builder: (context) => routeBuilders[route](context),
+        builder: (context) => routeBuilders[route]!(context),
       ),
     );
   }
@@ -128,7 +128,7 @@ class TabNavigator extends StatelessWidget {
 
     final result = await globalNavigator.push(
       MaterialPageRoute(
-        builder: (context) => routeBuilders[route](context),
+        builder: (context) => routeBuilders[route]!(context),
       ),
     );
 
@@ -143,7 +143,7 @@ class TabNavigator extends StatelessWidget {
 
     final result = await globalNavigator.pushReplacement(
       MaterialPageRoute(
-        builder: (context) => routeBuilders[route](context),
+        builder: (context) => routeBuilders[route]!(context),
       ),
     );
 

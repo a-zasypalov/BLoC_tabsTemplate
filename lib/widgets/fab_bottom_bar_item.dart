@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FABBottomAppBarItem {
-  FABBottomAppBarItem({this.iconData, this.text});
+  FABBottomAppBarItem({required this.iconData, required this.text});
 
   IconData iconData;
   String text;
@@ -9,16 +9,16 @@ class FABBottomAppBarItem {
 
 class FABBottomAppBar extends StatefulWidget {
   FABBottomAppBar(
-      {this.items,
-      this.centerItemText,
+      {required this.items,
+      required this.centerItemText,
       this.height: 60.0,
       this.iconSize: 24.0,
-      this.backgroundColor,
-      this.color,
-      this.selectedColor,
-      this.notchedShape,
-      this.onTabSelected,
-      this.selectedIndex}) {
+      required this.backgroundColor,
+      required this.color,
+      required this.selectedColor,
+      required this.notchedShape,
+      required this.onTabSelected,
+      required this.selectedIndex}) {
     assert(this.items.length == 2 || this.items.length == 4);
   }
 
@@ -78,7 +78,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
           children: <Widget>[
             SizedBox(height: widget.iconSize),
             Text(
-              widget.centerItemText ?? '',
+              widget.centerItemText,
               style: TextStyle(color: widget.color),
             ),
           ],
@@ -88,9 +88,9 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
   }
 
   Widget _buildTabItem({
-    FABBottomAppBarItem item,
-    int index,
-    ValueChanged<int> onPressed,
+    required FABBottomAppBarItem item,
+    required int index,
+    required ValueChanged<int> onPressed,
   }) {
     Color color =
         widget.selectedIndex == index ? widget.selectedColor : widget.color;

@@ -9,7 +9,7 @@ class AdviceQrScreen extends StatefulWidget {
   final ValueChanged<String> onGlobalPush;
   final ValueChanged<String> onPushReplacement;
 
-  AdviceQrScreen({this.bloc, this.onPush, this.onGlobalPush, this.onPushReplacement});
+  AdviceQrScreen({required this.bloc, required this.onPush, required this.onGlobalPush, required this.onPushReplacement});
 
   @override
   State<StatefulWidget> createState() {
@@ -26,8 +26,14 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
     super.build(context);
     return StreamBuilder(
       stream: widget.bloc.adviceStream,
-      builder: (context, AsyncSnapshot<Advice> snapshot) {
+      builder: (context, AsyncSnapshot<Advice?> snapshot) {
         if (snapshot.hasData) {
+
+          String safeAdvice = "";
+          if(snapshot.data?.advice != null) {
+            safeAdvice = snapshot.data!.advice!;
+          }
+
           return Center(
             child: SingleChildScrollView(
               child: Column(
@@ -37,14 +43,14 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16.0, 0, 16.0, 0),
                     child: Text(
-                      snapshot.data.advice,
+                      safeAdvice,
                       textAlign: TextAlign.center,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Image.network(
-                      "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${snapshot.data.advice}",
+                      "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=$safeAdvice",
                       height: 128,
                     ),
                   ),
@@ -58,7 +64,7 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () => {
                         widget.bloc.getRandomAdvice(true),
                       },
@@ -67,27 +73,27 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () => {
-                        widget.onPush(snapshot.data.advice)
+                        widget.onPush(safeAdvice)
                       },
                       child: Text('Local push'),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () => {
-                        widget.onGlobalPush(snapshot.data.advice)
+                        widget.onGlobalPush(safeAdvice)
                       },
                       child: Text('Global push'),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () => {
-                        widget.onPushReplacement(snapshot.data.advice)
+                        widget.onPushReplacement(safeAdvice)
                       },
                       child: Text('Replace'),
                     ),
@@ -105,7 +111,7 @@ class AdviceQrScreenState extends State<AdviceQrScreen>
               Text(snapshot.error.toString()),
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                   onPressed: () => {
                     widget.bloc.getRandomAdvice(true),
                   },
