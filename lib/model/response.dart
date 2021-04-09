@@ -1,9 +1,9 @@
 class BaseTypedResponse<T> {
 
-  int status;
+  int? status;
   T data;
-  String error;
+  String? error;
 
-  BaseTypedResponse({this.status, this.error, this.data});
+  BaseTypedResponse({this.status, this.error, required this.data});
 
 }

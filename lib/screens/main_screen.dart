@@ -1,5 +1,4 @@
 import 'package:arch_sample/screens/qr_scanned_screen.dart';
-import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:arch_sample/widgets/fab_bottom_bar_item.dart';
@@ -31,10 +30,7 @@ class HomeWidgetState extends State<HomeWidget> {
 
     return WillPopScope(
       onWillPop: () async {
-        final isFirstRouteInCurrentTab = !await _tabs.values
-            .toList()[_currentTabPosition]
-            .currentState
-            .maybePop();
+        final isFirstRouteInCurrentTab = !await _tabs.values.toList()[_currentTabPosition].currentState!.maybePop();
         if (isFirstRouteInCurrentTab) {
           // if not on the 'main' tab
           if (_currentTabPosition != 0) {
@@ -58,10 +54,9 @@ class HomeWidgetState extends State<HomeWidget> {
         floatingActionButton: showFab //Hide FAB if keyboard is visible
             ? FloatingActionButton(
                 onPressed: () async => {
-                  await BarcodeScanner.scan().then((value) => {
-                    if (value.rawContent.isNotEmpty)
-                      {_openQrcannedValueGlobally(value.rawContent, context)}
-                  })
+                  // await BarcodeScanner.scan().then((value) => {
+                  //       if (value.rawContent.isNotEmpty) {_openQrcannedValueGlobally(value.rawContent, context)}
+                  //     })
                 },
                 child: Icon(Icons.add),
                 elevation: 2.0,
@@ -83,6 +78,7 @@ class HomeWidgetState extends State<HomeWidget> {
             FABBottomAppBarItem(iconData: Icons.dashboard, text: 'Bottom'),
             FABBottomAppBarItem(iconData: Icons.info, text: 'Bar'),
           ],
+          backgroundColor: Colors.white, centerItemText: '',
         ),
         body: IndexedStack(
           index: _currentTabPosition,
@@ -108,10 +104,7 @@ class HomeWidgetState extends State<HomeWidget> {
   void _selectTab(int tabIndex) {
     if (tabIndex == _currentTabPosition) {
       // pop to first route
-      _tabs.values
-          .toList()[_currentTabPosition]
-          .currentState
-          .popUntil((route) => route.isFirst);
+      _tabs.values.toList()[_currentTabPosition].currentState!.popUntil((route) => route.isFirst);
     } else {
       setState(() => _currentTabPosition = tabIndex);
     }
@@ -121,7 +114,7 @@ class HomeWidgetState extends State<HomeWidget> {
     return Offstage(
       offstage: _tabs.keys.toList()[_currentTabPosition] != tabItem,
       child: TabNavigator(
-        navigatorKey: _tabs[tabItem],
+        navigatorKey: _tabs[tabItem]!,
         tabItem: tabItem,
         globalNavigator: globalNavigator,
       ),

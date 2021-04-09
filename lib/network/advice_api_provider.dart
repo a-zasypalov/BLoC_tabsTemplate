@@ -10,7 +10,7 @@ class AdviceApiProvider {
   Future<BaseTypedResponse<Advice>> getRandomAdvice() async {
 
     try {
-      final response = await client.get('https://api.adviceslip.com/advice');
+      final response = await client.get(Uri.https('api.adviceslip.com', '/advice'));
 
       if (response.statusCode == 200) {
         return BaseTypedResponse<Advice>(
@@ -21,7 +21,7 @@ class AdviceApiProvider {
       }
 
     } catch (SocketException) {
-      throw SocketException("No internet");
+      throw SocketException;
     }
 
   }

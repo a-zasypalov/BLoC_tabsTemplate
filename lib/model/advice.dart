@@ -1,12 +1,12 @@
 
 class Advice {
-  String slip_id;
-  String advice;
+  String? slipId;
+  String? advice;
 
-  Advice({this.slip_id, this.advice});
+  Advice({this.slipId, this.advice});
 
   Advice.fromJson(Map<String, dynamic> parsedJson) {
-    slip_id = parsedJson['slip_id'];
+    slipId = parsedJson['slip_id'];
     advice = parsedJson['advice'];
   }
 }

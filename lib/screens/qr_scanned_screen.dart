@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class QrScannedScreen extends StatelessWidget {
   final String advice;
 
-  QrScannedScreen({this.advice});
+  QrScannedScreen({required this.advice});
 
   @override
   Widget build(BuildContext context) {
